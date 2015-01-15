@@ -4,8 +4,8 @@ task main()
 {
     while(true)//Loop infinitely
     {
-        motor[leftMotor] = (vexRT[CH3] / 3) - (vexRT[CH4] / 3);//Magic - not verified, so ignore the subtraction for now
-        motor[rightMotor] = (vexRT[CH3] / 3) - (vexRT[CH4] / 3);
+        motor[leftMotor] = (vexRT[CH3] / 2) - (vexRT[CH4] / 2);//Magic - not verified, so ignore the subtraction for now
+        motor[rightMotor] = (vexRT[CH3] / 2) - (vexRT[CH4] / 2);
         
         if(vexRT[Btn5U])//If R1 is pressed...
             motor[armMotor] = 40;//Move the arm up...
