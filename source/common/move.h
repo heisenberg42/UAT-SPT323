@@ -18,14 +18,43 @@ task RCMove()
 
 }
 
-void move(int x, int y, int r)
-{
-	if(x)x /= 3;
-	if(y)y /= 3;
-	if(r)r /= 3;
 
-	motor[frontRightMotor] = -y + x + r;
-	motor[frontLeftMotor] = -y - x - r;
-	motor[backRightMotor] = y + x - r;
-	motor[backLeftMotor] = y - x + r;
+
+
+task AutoMove()
+{
+	long nTicks = 0;
+	while(true)
+	{
+		nMotorEncoder[backRightMotor] = 0;
+		motor[backRightMotor] = 100;
+		delay(1000);
+		nTicks = nMotorEncoder[backRightMotor];
+	}
+}
+
+int m1, m2, m3, m4;
+
+void move(int x = 0, int y = 0, int r = 0)
+{
+	x /= 3;
+	y /= 3;
+	r /= 3;
+
+	if((m1 = -y + x + r) < 30 && m1 > 0)m1 = 30;
+	else if(m1 > -30 && m1 < 0)m1 = -30;
+
+	if((m2 = -y - x - r) < 30 && m2 > 0)m2 = 30;
+	else if(m2 > -30 && m2 < 0)m2 = -30;
+
+	if((m3 = y + x - r) < 30 && m3 > 0)m3 = 30;
+	else if(m3 > -30 && m3 < 0)m3 = -30;
+
+	if((m4 = y - x + r) < 30 && m4 > 0)m4 = 30;
+	else if(m4 > -30 && m4 < 0)m4 = -30;
+
+	motor[frontRightMotor] = m1;
+	motor[frontLeftMotor] = m2;
+	motor[backRightMotor] = m3;
+	motor[backLeftMotor] = m4;
 }
