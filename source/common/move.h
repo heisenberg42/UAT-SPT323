@@ -35,23 +35,25 @@ task AutoMove()
 
 int m1, m2, m3, m4;
 
+#define MIN_SPEED 15
+
 void move(int x = 0, int y = 0, int r = 0)
 {
 	x /= 3;
 	y /= 3;
 	r /= 3;
 
-	if((m1 = -y + x + r) < 30 && m1 > 0)m1 = 30;
-	else if(m1 > -30 && m1 < 0)m1 = -30;
+	if((m1 = -y + x + r) < MIN_SPEED && m1 > 0)m1 = MIN_SPEED;
+	else if(m1 > -MIN_SPEED && m1 < 0)m1 = -MIN_SPEED;
 
-	if((m2 = -y - x - r) < 30 && m2 > 0)m2 = 30;
-	else if(m2 > -30 && m2 < 0)m2 = -30;
+	if((m2 = -y - x - r) < MIN_SPEED && m2 > 0)m2 = MIN_SPEED;
+	else if(m2 > -MIN_SPEED && m2 < 0)m2 = -MIN_SPEED;
 
-	if((m3 = y + x - r) < 30 && m3 > 0)m3 = 30;
-	else if(m3 > -30 && m3 < 0)m3 = -30;
+	if((m3 = y + x - r) < MIN_SPEED && m3 > 0)m3 = MIN_SPEED;
+	else if(m3 > -MIN_SPEED && m3 < 0)m3 = -MIN_SPEED;
 
-	if((m4 = y - x + r) < 30 && m4 > 0)m4 = 30;
-	else if(m4 > -30 && m4 < 0)m4 = -30;
+	if((m4 = y - x + r) < MIN_SPEED && m4 > 0)m4 = MIN_SPEED;
+	else if(m4 > -MIN_SPEED && m4 < 0)m4 = -MIN_SPEED;
 
 	motor[frontRightMotor] = m1;
 	motor[frontLeftMotor] = m2;
