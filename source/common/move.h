@@ -35,7 +35,7 @@ task AutoMove()
 
 int m1, m2, m3, m4;
 
-#define MIN_SPEED 15
+#define MIN_SPEED 25
 
 void move(int x = 0, int y = 0, int r = 0)
 {
