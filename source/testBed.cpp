@@ -14,6 +14,8 @@
 
 #include "common\move.h"
 
+#pragma platform(VEX)
+
 long lSonar, mSonar, rSonar;
 
 int speedForw = 0;
@@ -112,12 +114,12 @@ task main()
 	//	if((nSysTime - lTime) >= 100)
 			if((lSonar <= mSonar) && (lSonar < rSonar))//((lSonar > (mSonar - 2)) && (lSonar < (mSonar + 2)) && (rSonar > mSonar)) || (lSonar < (mSonar - 1)))//Move left
 			{
-				speedRight += -5 * log(/*rSonar - */lSonar) - 5;
+				speedRight = -25;
 			}
 	//	if((nSysTime - lTime) >= 100)
-			else if((rSonar <= mSonar) && (rSonar < lSonar))//((rSonar > (mSonar - 2)) && (rSonar < (mSonar + 2)) && (lSonar > mSonar)) || (rSonar < (mSonar - 1)))//Move right
+			if((rSonar <= mSonar) && (rSonar < lSonar))//((rSonar > (mSonar - 2)) && (rSonar < (mSonar + 2)) && (lSonar > mSonar)) || (rSonar < (mSonar - 1)))//Move right
 			{
-				speedRight += 5 * log(/*lSonar - */rSonar) + 5;
+				speedRight = 25;
 			}
 			//else if((rSonar > mSonar) && (lSonar >= rSonar) && (lSonar < (mSonar + 15)))//Move CCW
 			//{
@@ -152,41 +154,41 @@ task main()
 			{
 				if(lSonar < rSonar)
 				{
-					if(lSonar > 11)
-						speedForw += 5 * log(mSonar);
+					if(lSonar > 12)
+						speedForw = 5 * (lSonar - 8);
 					else if(lSonar < 8)
-						speedForw += -5 * log(mSonar);
+						speedForw = 5 * (lSonar - 8);
 					else
 						speedForw = 0;
 				}
-				else if(rSonar > 11)
-					speedForw += 5 * log(mSonar);
+				else if(rSonar > 12)
+					speedForw = 5 * (rSonar - 8);
 				else if(rSonar < 8)
-					speedForw += -5 * log(mSonar);
+					speedForw = 5 * (rSonar - 8);
 				else
 					speedForw = 0;
 			}
-			else if(mSonar > 11)
-				speedForw += 5 * log(mSonar);
+			else if(mSonar > 12)
+				speedForw = 5 * (mSonar - 8);
 			else if(mSonar < 8)
-				speedForw += -5 * log(mSonar);
+				speedForw = 5 * (mSonar- 8);
 			else
 				speedForw = 0;
 
-			if(speedForw < -100)
+			if(speedForw < -150)
 			{
-				speedForw = -100;
+				speedForw = -150;
 			}
-			else if(speedForw > 100)
+			else if(speedForw > 150)
 			{
-				speedForw = 100;
+				speedForw = 150;
 			}
 
 //		if((nSysTime - lTime) >= 100)
 		{
 			move(speedRight, speedForw, speedRot);
-			delay(100);
-			move();
+			//delay(100);
+			//move();
 			lTime = nSysTime;
 		}
 			//move();
@@ -197,9 +199,9 @@ task main()
 				{
 					if(it == 1)
 					{
-						move(0, 40, 0);
-						delay(500);
-						move();
+						//move(0, 40, 0);
+						//delay(500);
+						move(0, 0, 0);
 						running = false;
 					}
 				}
