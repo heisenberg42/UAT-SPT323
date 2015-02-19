@@ -33,12 +33,13 @@ task AutoMove()
 	}
 }
 
-int m1, m2, m3, m4;
 
 #define MIN_SPEED 25
 
 void move(int x = 0, int y = 0, int r = 0)
 {
+	int m1, m2, m3, m4;
+
 	x /= 3;
 	y /= 3;
 	r /= 3;
@@ -59,4 +60,20 @@ void move(int x = 0, int y = 0, int r = 0)
 	motor[frontLeftMotor] = m2;
 	motor[backRightMotor] = m3;
 	motor[backLeftMotor] = m4;
+}
+
+#define TICKS_PER_ROT 627
+
+void moveForward(int d)
+{
+	nMotorEncoder[frontRightMotor] = 0;
+	nMotorEncoder[frontLeftMotor] = 0;
+	nMotorEncoder[backRightMotor] = 0;
+	nMotorEncoder[backLeftMotor] = 0;
+
+	while(nMotorEncoder[frontRightMotor] != TICKS_PER_ROT)
+	{
+		move(25,0,0);
+	}
+	move();
 }
