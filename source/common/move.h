@@ -40,6 +40,11 @@ void move(int x = 0, int y = 0, int r = 0)
 {
 	int m1, m2, m3, m4;
 
+	if(!x && !y && !r)
+	{
+		motor[frontRightMotor] = motor[frontLeftMotor] = motor[backRightMotor] = motor[backLeftMotor] = 0;
+	}
+
 	x /= 3;
 	y /= 3;
 	r /= 3;
@@ -62,18 +67,52 @@ void move(int x = 0, int y = 0, int r = 0)
 	motor[backLeftMotor] = m4;
 }
 
-#define TICKS_PER_ROT 627
+#define TICKS_PER_ROT 627.2
+#define TICKS_PER_IN (TICKS_PER_ROT / 12) //49.9 /*52.26*/
 
 void moveForward(int d)
 {
+	if(!d)
+		return;
+
 	nMotorEncoder[frontRightMotor] = 0;
 	nMotorEncoder[frontLeftMotor] = 0;
 	nMotorEncoder[backRightMotor] = 0;
 	nMotorEncoder[backLeftMotor] = 0;
 
-	while(nMotorEncoder[frontRightMotor] != TICKS_PER_ROT)
+	int sign = (d < 0) ? -1 : 1;
+
+
+	while((sign * nMotorEncoder[frontRightMotor]) < (sign * d * TICKS_PER_IN))
 	{
-		move(25,0,0);
+		move(sign * 25,0,0);
 	}
+
+	move();
+}
+
+double tmpV;
+
+void moveRotate(double a)
+{
+	if(!a)
+		return;
+
+	nMotorEncoder[frontRightMotor] = 0;
+	nMotorEncoder[frontLeftMotor] = 0;
+	nMotorEncoder[backRightMotor] = 0;
+	nMotorEncoder[backLeftMotor] = 0;
+
+	double sign = (a < 0) ? -1 : 1;
+
+	tmpV = (sign * a * (9) * TICKS_PER_IN);
+
+
+	while((sign * nMotorEncoder[frontRightMotor]) < (sign * a * (9 + ((a > (PI / 2)) ? .2 : 0/*7.38*/)) * TICKS_PER_IN))
+	{
+		motor[backLeftMotor] = motor[frontLeftMotor] = sign * MIN_SPEED;
+		motor[backRightMotor] = motor[frontRightMotor] = sign * MIN_SPEED;
+	}
+
 	move();
 }
