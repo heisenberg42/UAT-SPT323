@@ -3,7 +3,7 @@
 
 bool aligned = false;
 
-task alignBot()
+void alignBot()
 {
 	bool running = true;
 

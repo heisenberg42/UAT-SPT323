@@ -19,21 +19,6 @@ task RCMove()
 }
 
 
-
-
-task AutoMove()
-{
-	long nTicks = 0;
-	while(true)
-	{
-		nMotorEncoder[backRightMotor] = 0;
-		motor[backRightMotor] = 100;
-		delay(1000);
-		nTicks = nMotorEncoder[backRightMotor];
-	}
-}
-
-
 #define MIN_SPEED 25
 
 void move(int x = 0, int y = 0, int r = 0)
@@ -91,7 +76,26 @@ void moveForward(int d)
 	move();
 }
 
-double tmpV;
+void moveRight(int d)
+{
+	if(!d)
+		return;
+
+	nMotorEncoder[frontRightMotor] = 0;
+	nMotorEncoder[frontLeftMotor] = 0;
+	nMotorEncoder[backRightMotor] = 0;
+	nMotorEncoder[backLeftMotor] = 0;
+
+	int sign = (d < 0) ? -1 : 1;
+
+
+	while((sign * nMotorEncoder[frontRightMotor]) < (sign * d * TICKS_PER_IN))
+	{
+		move(0,sign * 25,0);
+	}
+
+	move();
+}
 
 void moveRotate(double a)
 {
@@ -104,9 +108,6 @@ void moveRotate(double a)
 	nMotorEncoder[backLeftMotor] = 0;
 
 	double sign = (a < 0) ? -1 : 1;
-
-	tmpV = (sign * a * (9) * TICKS_PER_IN);
-
 
 	while((sign * nMotorEncoder[frontRightMotor]) < (sign * a * (9 + ((a > (PI / 2)) ? .2 : 0/*7.38*/)) * TICKS_PER_IN))
 	{

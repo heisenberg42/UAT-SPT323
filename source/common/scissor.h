@@ -1,24 +1,66 @@
 
 #pragma once
 
+#define MAX_SCISS_LVL 7
+
+#define TICKS_PER_LEVEL 50//TODO: Get # Ticks...
+
+int gCurScissLvl = 0;
+
+void raiseLiftLvl()
+{
+	if(gCurScissLvl < MAX_SCISS_LVL)
+	{
+		int nLiftLvl = gCurScissLvl + 1;//Ticks = nMotorEncoder[scissorLeft] + TICKS_PER_LEVEL;
+
+		while(gCurScissLvl < nLiftLvl)//nMotorEncoder[scissorLeft] < nLiftTicks)
+		{
+			motor[scissorRight] = 40;
+			motor[scissorLeft] = 40;
+		}
+
+		motor[scissorRight] = motor[scissorLeft] = 0;
+	}
+}
+
+void dropLiftLvl()
+{
+	if(gCurScissLvl)
+	{
+		int nLiftLvl = gCurScissLvl - 1;
+
+		while(gCurScissLvl > nLiftLvl)//nMotorEncoder[scissorLeft] > nLiftTicks)
+		{
+			motor[scissorRight] = -35 + (nMotorEncoder[scissorLeft] % TICKS_PER_LEVEL);
+			motor[scissorLeft] = -35 + (nMotorEncoder[scissorLeft] % TICKS_PER_LEVEL);
+		}
+
+		motor[scissorRight] = motor[scissorLeft] = 0;
+	}
+}
+
+task trackCurLvl()
+{
+	gCurScissLvl = nMotorEncoder[scissorLeft] / TICKS_PER_LEVEL;
+}
 
 task scissorRC()
 {
 	while(1)
 	{
-		if(vexRT[Btn6U])
+		if(vexRT[Btn5U])
 		{
-			motor[scissorRightA] = 40;
-			motor[scissorRightB] = 40;
+			motor[scissorRight] = 40;
+			motor[scissorLeft] = 40;
 		}
-		else if(vexRT[Btn6D])
+		else if(vexRT[Btn5D])
 		{
-			motor[scissorRightA] = -35;
-			motor[scissorRightB] = -35;
+			motor[scissorRight] = -35;
+			motor[scissorLeft] = -35;
 		}
 		else
 		{
-			motor[scissorRightA] = motor[scissorRightB] = 0;
+			motor[scissorRight] = motor[scissorLeft] = 0;
 		}
 	}
 }
