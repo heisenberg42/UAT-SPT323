@@ -1,6 +1,12 @@
 
 #pragma once
 
+#ifdef LARGE_BOT
+	#define ROT_CONST 10
+#else
+	#define ROT_CONST 9
+#endif
+
 task RCMove()
 {
 	while(true){
@@ -9,10 +15,10 @@ task RCMove()
 		int Side = vexRT[Ch4] / 3;
 		int Rot = vexRT[Ch1] / 3;
 
-		motor[frontRightMotor] = -Fore + Side + Rot;
-		motor[frontLeftMotor] = -Fore - Side - Rot;
-		motor[backRightMotor] = Fore + Side - Rot;
-		motor[backLeftMotor] = Fore - Side + Rot;
+		motor[frontRightMotor] = (-Fore + Side + Rot) / (vexRT[Btn8L] ? 2 : 1);
+		motor[frontLeftMotor] = (-Fore - Side - Rot) / (vexRT[Btn8L] ? 2 : 1);
+		motor[backRightMotor] = (Fore + Side - Rot) / (vexRT[Btn8L] ? 2 : 1);
+		motor[backLeftMotor] = (Fore - Side + Rot) / (vexRT[Btn8L] ? 2 : 1);
 
 	}
 
@@ -97,6 +103,7 @@ void moveRight(int d)
 	move();
 }
 
+
 void moveRotate(double a)
 {
 	if(!a)
@@ -109,10 +116,11 @@ void moveRotate(double a)
 
 	double sign = (a < 0) ? -1 : 1;
 
-	while((sign * nMotorEncoder[frontRightMotor]) < (sign * a * (9 + ((a > (PI / 2)) ? .2 : 0/*7.38*/)) * TICKS_PER_IN))
+	while((sign * nMotorEncoder[frontRightMotor]) < (sign * a * (ROT_CONST + ((a > (PI / 2)) ? .2 : 0/*7.38*/)) * TICKS_PER_IN))
 	{
-		motor[backLeftMotor] = motor[frontLeftMotor] = sign * MIN_SPEED;
-		motor[backRightMotor] = motor[frontRightMotor] = sign * MIN_SPEED;
+		move(0, 0, sign * MIN_SPEED * 2);
+		//motor[backLeftMotor] = motor[frontLeftMotor] = sign * MIN_SPEED *2;
+		//motor[backRightMotor] = motor[frontRightMotor] = sign * MIN_SPEED *2;
 	}
 
 	move();

@@ -72,16 +72,7 @@ task autonomous()
   // Insert user code here.
   // .....................................................................................
 
-	moveForward(12);
-	alignBot();
-	pickupBlock();
-	moveForward(16);
-	moveRotate(-PI / 2);
-	alignBot();
-	pickupBlock();
-	moveForward(23);
-	alignBot();
-	pickupBlock();
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -29,6 +29,8 @@
 
 //------------------------------------------------Headers-----------------------------------------------------//
 
+#define LARGE_BOT
+
 #include "common\move.h"
 #include "common\pingAlign.h"
 #include "common\scissor.h"
