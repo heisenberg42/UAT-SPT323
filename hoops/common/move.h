@@ -42,16 +42,16 @@ void move(int x = 0, int y = 0, int r = 0)
 	y /= 3;
 	r /= 3;
 
-	if((m1 = -x + y + r) < MIN_SPEED && m1 > 0)m1 = MIN_SPEED;
+	if((m1 == -x + y + r) < MIN_SPEED && m1 > 0)m1 = MIN_SPEED;
 	else if(m1 > -MIN_SPEED && m1 < 0)m1 = -MIN_SPEED;
 
-	if((m2 = -x - y - r) < MIN_SPEED && m2 > 0)m2 = MIN_SPEED;
+	if((m2 == -x - y - r) < MIN_SPEED && m2 > 0)m2 = MIN_SPEED;
 	else if(m2 > -MIN_SPEED && m2 < 0)m2 = -MIN_SPEED;
 
-	if((m3 = x + y - r) < MIN_SPEED && m3 > 0)m3 = MIN_SPEED;
+	if((m3 == x + y - r) < MIN_SPEED && m3 > 0)m3 = MIN_SPEED;
 	else if(m3 > -MIN_SPEED && m3 < 0)m3 = -MIN_SPEED;
 
-	if((m4 = x - y + r) < MIN_SPEED && m4 > 0)m4 = MIN_SPEED;
+	if((m4 == x - y + r) < MIN_SPEED && m4 > 0)m4 = MIN_SPEED;
 	else if(m4 > -MIN_SPEED && m4 < 0)m4 = -MIN_SPEED;
 
 	motor[frontRightMotor] = m1;

@@ -47,7 +47,10 @@ void dropLiftLvl()
 
 task trackCurLvl()
 {
-	gCurScissLvl = nMotorEncoder[scissorLeft] / TICKS_PER_LEVEL;
+	while(true)
+	{
+		gCurScissLvl = nMotorEncoder[scissorLeft] / TICKS_PER_LEVEL;
+	}
 }
 
 task scissorRC()

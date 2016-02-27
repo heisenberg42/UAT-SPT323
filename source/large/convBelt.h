@@ -15,6 +15,27 @@ int peekPwr = 0;
 void pickupBlock();
 void dropBlock();
 
+
+task convRC()
+{
+	while(true)
+	{
+		if(vexRT[Btn6U])
+		{
+			motor[convMot] = 75 / (vexRT[Btn8L] ? 2 : 1);
+		}
+		else if(vexRT[Btn6D])
+		{
+			motor[convMot] = -75 / (vexRT[Btn8L] ? 2 : 1);
+		}
+		else
+		{
+			motor[convMot] = 0;
+		}
+	}
+}
+
+
 void prepConv()
 {
 	nMotorEncoder[convMot] = 0;
