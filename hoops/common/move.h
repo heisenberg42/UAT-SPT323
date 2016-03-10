@@ -13,14 +13,21 @@ task RCMove()
 {
 	while(true){
 
-		int Fore = vexRT[Ch3] / 3;
-		int Side = vexRT[Ch4] / 3;
-		int Rot = vexRT[Ch1] / 3;
+		int Fore = vexRT[Ch3] / 2;
+		int Side = vexRT[Ch1] / 2;
+		int Rot = vexRT[Ch4] / 2;
 
-		motor[frontRightMotor] = (-Fore + Side + Rot) RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
-		motor[frontLeftMotor] = (-Fore - Side - Rot) RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
-		motor[backRightMotor] = (Fore + Side - Rot) RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
-		motor[backLeftMotor] = (Fore - Side + Rot) RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
+		//motor[frontRightMotor]	= (-Fore - Side + Rot);// RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
+		//motor[frontLeftMotor]	= (-Fore + Side - Rot);// RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
+		//motor[backRightMotor]	= (Fore + Side - Rot);// RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
+		//motor[backLeftMotor]	= (Fore - Side + Rot);// RC_REDUCE;// (vexRT[Btn8L] ? 2 : 1);
+
+		motor[frontRightMotor]	= (Fore + Rot);
+		motor[frontLeftMotor]	= (Fore - Rot);
+		motor[backRightMotor]	= (-Fore - Rot);
+		motor[backLeftMotor]	= (-Fore + Rot);
+
+		motor[centerMotor]		= Side;
 
 	}
 
@@ -60,7 +67,7 @@ void move(int x = 0, int y = 0, int r = 0)
 	motor[backLeftMotor] = m4;
 }
 
-#define TICKS_PER_ROT 627.2
+#define TICKS_PER_ROT 632//627.2
 #define TICKS_PER_IN (TICKS_PER_ROT / 12) //49.9 /*52.26*/
 
 void moveForward(int d)
